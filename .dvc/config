@@ -1,4 +1,4 @@
 [core]
-    remote = ml_models_gdrive
-['remote "ml_models_gdrive"']
-    url = https://drive.google.com/drive/folders/1e3CFKh77pgeqUUIUnOvTq97pnxgBR0fh
+    remote = drive
+['remote "drive"']
+    url = gdrive://1e3CFKh77pgeqUUIUnOvTq97pnxgBR0fh
