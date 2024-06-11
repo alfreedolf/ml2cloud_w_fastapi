@@ -5,18 +5,15 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Model Test",
+            "name": "Unit Test Model",
             "type": "debugpy",
             "request": "launch",
             "program": "tests/unit/model_test.py",
-            "console": "integratedTerminal"
-        },
-        {
-            "name": "Train Model",
-            "type": "debugpy",
-            "request": "launch",
-            "program": "train_model.py",
-            "console": "integratedTerminal"
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            "env": {"PYTHONPATH": "${workspaceFolder}${pathSeparator}${env:PYTHONPATH}"}
         }
+        
     ]
+    
 }
