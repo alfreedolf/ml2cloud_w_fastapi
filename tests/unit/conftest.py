@@ -15,10 +15,12 @@ def training_data():
     
 @pytest.fixture(name="X_train")
 def training_features(training_data):
-    yield training_data.drop(columns=["salary"], inplace=True)
+    yield training_data.drop(columns=["salary"], inplace=False)
     
 @pytest.fixture(name="y_train")
 def training_labels(training_data):
-    yield training_data["salary"]
+    y_train = training_data["salary"]
+    print(y_train)
+    yield y_train
     
     
