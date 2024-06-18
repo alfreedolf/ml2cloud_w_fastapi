@@ -5,18 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Model Test",
-            "type": "debugpy",
-            "request": "launch",
-            "program": "tests/unit/model_test.py",
-            "console": "integratedTerminal"
-        },
-        {
             "name": "Train Model",
             "type": "debugpy",
             "request": "launch",
             "program": "train_model.py",
             "console": "integratedTerminal"
-        }
+        },
+        {
+            "name": "Test Model",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "tests/unit/model_test.py",
+            "console": "integratedTerminal"
+        
     ]
 }

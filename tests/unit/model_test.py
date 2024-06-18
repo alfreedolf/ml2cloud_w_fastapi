@@ -4,7 +4,7 @@ import os
 
 # sys.path.append('ml')
 # print(os.getcwd())
-from model import train_model
+from ml.model import train_model
 
 
 def test_train_model(X_train, y_train):
