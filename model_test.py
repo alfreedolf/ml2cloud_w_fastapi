@@ -2,7 +2,6 @@ import pytest
 import sys
 import os
 
-# sys.path.append('ml')
 # print(os.getcwd())
 from ml.model import train_model
 
