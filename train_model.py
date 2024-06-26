@@ -22,7 +22,7 @@ if __name__ == "__main__":
     census_df = pd.read_csv(os.path.join(os.getcwd(), "data", "census_clean.csv"))
 
     # Optional enhancement, use K-fold cross validation instead of a train-test split.
-    train_data, test_data = train_test_split(census_df, test_size=0.20)
+    train_data, test_data = train_test_split(census_df, test_size=0.20, random_state=42)
 
     cat_features = [
         "workclass",
