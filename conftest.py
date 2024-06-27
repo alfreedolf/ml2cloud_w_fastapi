@@ -88,8 +88,3 @@ def predictions(preprocessed_split_data):
     predictions = trained_model.predict(preprocessed_split_data["X_test"])
     return predictions
 
-
-@pytest.fixture(name='fitted_model')
-def train_model(X_train, y_train):
-    trained_model = train_model(X_train=X_train, y_train=y_train)
-    return trained_model

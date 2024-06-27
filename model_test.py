@@ -3,12 +3,11 @@ import sys
 import os
 
 # print(os.getcwd())
-from ml.model import compute_model_metrics
+from ml.model import compute_model_metrics, train_model
 
-
-
-def test_trained_model(fitted_model):
-    assert fitted_model is not None
+def test_train_model(X_train, y_train):
+    trained_model = train_model(X_train=X_train, y_train=y_train)
+    assert trained_model is not None
 
 def test_predictions(predictions, preprocessed_split_data):
     assert predictions is not None
