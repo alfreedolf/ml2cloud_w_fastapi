@@ -3,13 +3,16 @@ import sys
 import os
 
 # print(os.getcwd())
-from ml.model import compute_model_metrics, train_model
+from ml.model import compute_model_metrics, train_model, inference
+
 
 def test_train_model(X_train, y_train):
     trained_model = train_model(X_train=X_train, y_train=y_train)
     assert trained_model is not None
 
-def test_predictions(predictions, preprocessed_split_data):
+
+def test_inference(fitted_model, preprocessed_split_data):
+    predictions = inference(model=fitted_model, X=preprocessed_split_data["X_test"])
     assert predictions is not None
     assert predictions.shape == preprocessed_split_data["y_test"].shape
 

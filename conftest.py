@@ -78,6 +78,13 @@ def categorical_features():
     ]
     yield features
 
+@pytest.fixture(name="fitted_model")
+def fit_model(preprocessed_split_data):
+    trained_model = train_model(
+        X_train=preprocessed_split_data["X_train"],
+        y_train=preprocessed_split_data["y_train"],
+    )
+    yield trained_model
 
 @pytest.fixture(name="predictions")
 def predictions(preprocessed_split_data):
