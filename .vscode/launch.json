@@ -17,6 +17,14 @@
             "request": "launch",
             "program": "train_model.py",
             "console": "integratedTerminal"
+        },
+        {
+            "name": "Model Training K-Folds",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "train_model.py",
+            "console": "integratedTerminal",
+            "args": ["--k-fold-splits", "10"]
         }
     ]
 }
