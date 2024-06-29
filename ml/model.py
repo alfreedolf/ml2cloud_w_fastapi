@@ -1,6 +1,8 @@
 from sklearn.metrics import fbeta_score, precision_score, recall_score
 from sklearn.ensemble import RandomForestClassifier
 
+from ml.data import slice_data
+
 # Optional: implement hyperparameter tuning.
 def train_model(X_train, y_train):
     """
@@ -43,11 +45,9 @@ def compute_model_metrics(y, preds):
     recall = recall_score(y, preds, zero_division=1)
     return precision, recall, fbeta
 
-def _slice_data(data, slicing_feature):
-    # TODO: implement slicing
-    pass
 
-def compute_molde_metrics_on_slice(model, data, slicing_feature):
+
+def compute_model_metrics_on_slice(model, data, feature):
     """
     Validates the trained machine learning model using precision, recall, and F1 on slices.
 
@@ -66,7 +66,9 @@ def compute_molde_metrics_on_slice(model, data, slicing_feature):
     fbeta : float
     """
     # slice data
-    X, y = _slice_data(data, slicing_feature)
+    sliced_data = slice_data(data, feature)
+    
+    X = X.drop([label], axis=1)
 
     # do inference using the model
     preds = inference(model, X)

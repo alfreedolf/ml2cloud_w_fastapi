@@ -1,9 +1,26 @@
 import numpy as np
+import pandas as pd
 from sklearn.preprocessing import LabelBinarizer, OneHotEncoder
 
+def slice_data(data: pd.DataFrame, feature: str, feature_value: str) -> pd.DataFrame:
+    """
+    Slices the data respect to a feature.
+
+    Inputs
+    ------
+    data : pandas.DataFrame 
+        Input data
+    feature : str
+        feature to be used to slice the data
+    Returns
+    -------
+    sliced_data : pd.DataFrame
+    """
+    slice_of_data = data[data[feature] == feature_value]
+    return slice_of_data
 
 def process_data(
-    X, categorical_features=[], label=None, training=True, encoder=None, lb=None
+    X, categorical_features=[], label=None, slice_by=None, slice_val=None, training=True, encoder=None, lb=None
 ):
     """ Process the data used in the machine learning pipeline.
 
@@ -23,6 +40,10 @@ def process_data(
     label : str
         Name of the label column in `X`. If None, then an empty array will be returned
         for y (default=None)
+    slice_by : str
+        Name of the feature to be used to slice the data, if None, no slicing will be done.
+    slice_val : str
+        Value of the feature to be used to get the slice. Only used if slice_by is not None.
     training : bool
         Indicator if training mode or inference/validation mode.
     encoder : sklearn.preprocessing._encoders.OneHotEncoder
@@ -45,6 +66,8 @@ def process_data(
     """
 
     if label is not None:
+        if slice_by is not None:
+            X = slice_data(X, slice_by, slice_val)
         y = X[label]
         X = X.drop([label], axis=1)
     else:
