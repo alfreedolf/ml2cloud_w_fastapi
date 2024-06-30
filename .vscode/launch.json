@@ -12,14 +12,30 @@
             "console": "integratedTerminal"
         },
         {
-            "name": "Model Training",
+            "name": "Model Training and scoring",
             "type": "debugpy",
             "request": "launch",
             "program": "train_model.py",
             "console": "integratedTerminal"
         },
         {
-            "name": "Model Training K-Folds",
+            "name": "Model Training, score on Female Only",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "train_model.py",
+            "args": ["--slice-by", "sex", "--slice-class", "female"],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Model Training, score on Male Only",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "train_model.py",
+            "args": ["--slice-by", "sex", "--slice-class", "male"],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Model Training K-Folds and scoring",
             "type": "debugpy",
             "request": "launch",
             "program": "train_model.py",

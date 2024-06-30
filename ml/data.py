@@ -20,7 +20,7 @@ def slice_data(data: pd.DataFrame, feature: str, feature_value: str) -> pd.DataF
     return slice_of_data
 
 def process_data(
-    X, categorical_features=[], label=None, slice_by=None, slice_val=None, training=True, encoder=None, lb=None
+    X, categorical_features=[], label=None, slice_by=None, slice_class=None, training=True, encoder=None, lb=None
 ):
     """ Process the data used in the machine learning pipeline.
 
@@ -42,7 +42,7 @@ def process_data(
         for y (default=None)
     slice_by : str
         Name of the feature to be used to slice the data, if None, no slicing will be done.
-    slice_val : str
+    slice_class : str
         Value of the feature to be used to get the slice. Only used if slice_by is not None.
     training : bool
         Indicator if training mode or inference/validation mode.
@@ -66,8 +66,8 @@ def process_data(
     """
 
     if label is not None:
-        if slice_by is not None:
-            X = slice_data(X, slice_by, slice_val)
+        if slice_by is not None and training is False:
+            X = slice_data(X, slice_by, slice_class)
         y = X[label]
         X = X.drop([label], axis=1)
     else:

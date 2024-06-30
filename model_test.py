@@ -3,7 +3,7 @@ import sys
 import os
 
 # print(os.getcwd())
-from ml.model import compute_model_metrics, train_model, inference
+from ml.model import compute_model_metrics, compute_model_metrics_on_slice, train_model, inference
 
 
 def test_train_model(X_train, y_train):
@@ -19,7 +19,17 @@ def test_inference(fitted_model, preprocessed_split_data):
 
 def test_compute_model_metrics(preprocessed_split_data, predictions):
     # Optional enhancement, use K-fold cross validation instead of a train-test split.
-    compute_model_metrics(preprocessed_split_data["y_test"], preds=predictions)
+    precision, recall, fbeta = compute_model_metrics(preprocessed_split_data["y_test"], preds=predictions)
+    assert precision >= 0
+    assert recall >= 0
+    assert fbeta >= 0
+
+def test_compute_model_metrics_on_slices(preprocessed_split_data, predictions):
+    # Optional enhancement, use K-fold cross validation instead of a train-test split.
+    precision, recall, fbeta = compute_model_metrics_on_slice(preprocessed_split_data["y_test"], preds=predictions)
+    assert precision >= 0
+    assert recall >= 0
+    assert fbeta >= 0
 
 
 if __name__ == "__main__":
