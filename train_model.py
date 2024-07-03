@@ -30,15 +30,17 @@ CATEGORICAL_FEATURES = [
 
 
 # Train and save a model.
-def train():
+def train(model_output_file_name: str):
     model = train_model(X_train, y_train)
-    joblib.dump(model, os.path.join(os.getcwd(), "models", "model.pkl"))
+    joblib.dump(model, os.path.join(os.getcwd(), "models", model_output_file_name))
     return model
 
 
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
+    parser.add_argument("--model_output_file_name", type=str, default="model.pkl")
+    parser.add_argument("--test_split_ratio", type=float, default=0.20)
     parser.add_argument("--input_data_file", type=str, default="census_clean.csv")
     parser.add_argument("--k-fold-splits", type=int, default=-1)
     parser.add_argument("--slice-by", type=str, default=None)
@@ -50,14 +52,14 @@ if __name__ == "__main__":
 
     if args.k_fold_splits < 2:
         # Optional enhancement, use K-fold cross validation instead of a train-test split.
-        train_data, test_data = train_test_split(census_df, test_size=0.20, random_state=42)
+        train_data, test_data = train_test_split(census_df, test_size=args.test_split_ratio, random_state=42)
         X_train, y_train, encoder, lb = process_data(
             train_data,
             categorical_features=CATEGORICAL_FEATURES,
             label="salary",
             training=True,
         )
-        model = train()
+        model = train(args.model_output_file_name)
         X_test, y_test, _, _ = process_data(
             test_data,
             categorical_features=CATEGORICAL_FEATURES,
