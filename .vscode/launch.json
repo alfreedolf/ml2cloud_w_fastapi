@@ -23,7 +23,12 @@
             "type": "debugpy",
             "request": "launch",
             "program": "train_model.py",
-            "args": ["--slice-by", "sex", "--slice-class", "female"],
+            "args": [
+                "--slice-by",
+                "sex",
+                "--slice-class",
+                "female"
+            ],
             "console": "integratedTerminal"
         },
         {
@@ -31,7 +36,12 @@
             "type": "debugpy",
             "request": "launch",
             "program": "train_model.py",
-            "args": ["--slice-by", "sex", "--slice-class", "male"],
+            "args": [
+                "--slice-by",
+                "sex",
+                "--slice-class",
+                "male"
+            ],
             "console": "integratedTerminal"
         },
         {
@@ -40,7 +50,78 @@
             "request": "launch",
             "program": "train_model.py",
             "console": "integratedTerminal",
-            "args": ["--k-fold-splits", "10"]
+            "args": [
+                "--k-fold-splits",
+                "10"
+            ]
+        },
+        {
+            "name": "Model Training 10-Folds and scoring on Female only",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "train_model.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--k-fold-splits",
+                "10",
+                "--slice-by",
+                "sex",
+                "--slice-class",
+                "female",
+                "--model-output-file-name",
+                "model_10-fold_sex-female"
+            ]
+        },
+        {
+            "name": "Model Training 10-Folds and scoring on Male only",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "train_model.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--k-fold-splits",
+                "10",
+                "--slice-by",
+                "sex",
+                "--slice-class",
+                "male",
+                "--model-output-file-name",
+                "model_10-fold_sex-male"
+            ]
+        },
+        {
+            "name": "Model Training 10-Folds and scoring on Black only",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "train_model.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--k-fold-splits",
+                "10",
+                "--slice-by",
+                "race",
+                "--slice-class",
+                "black",
+                "--model-output-file-name",
+                "model_10-fold_race-black"
+            ]
+        },
+        {
+            "name": "Model Training 10-Folds and scoring on White only",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "train_model.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--k-fold-splits",
+                "10",
+                "--slice-by",
+                "race",
+                "--slice-class",
+                "white",
+                "--model-output-file-name",
+                "model_10-fold_race-white"
+            ]
         }
     ]
 }

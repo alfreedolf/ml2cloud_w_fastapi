@@ -1,0 +1,5 @@
+outs:
+- md5: aaba81feefcf31c1d7faff5eb6c3fd61
+  size: 82457433
+  hash: md5
+  path: model_10-fold_sex-female.pkl

@@ -32,15 +32,15 @@ CATEGORICAL_FEATURES = [
 # Train and save a model.
 def train(model_output_file_name: str):
     model = train_model(X_train, y_train)
-    joblib.dump(model, os.path.join(os.getcwd(), "models", model_output_file_name))
+    joblib.dump(model, os.path.join(os.getcwd(), "models", model_output_file_name+".pkl"))
     return model
 
 
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--model_output_file_name", type=str, default="model.pkl")
-    parser.add_argument("--test_split_ratio", type=float, default=0.20)
+    parser.add_argument("--model-output-file-name", type=str, default="model")
+    parser.add_argument("--test-split-ratio", type=float, default=0.20)
     parser.add_argument("--input_data_file", type=str, default="census_clean.csv")
     parser.add_argument("--k-fold-splits", type=int, default=-1)
     parser.add_argument("--slice-by", type=str, default=None)
@@ -132,7 +132,22 @@ if __name__ == "__main__":
         best_model = models[best_index]
         predictions = best_model.predict(X_test)
         accuracy = accuracy_score(y_test, predictions)
+
+        if args.slice_by is None:
+            precision, recall, fbeta = compute_model_metrics(y_test, predictions)
+            print(f"max score in {args.k_fold_splits} training: {scores[best_index]}")
+        else:
+            precision, recall, fbeta = compute_model_metrics_on_slice(model=model,
+                categorical_features=CATEGORICAL_FEATURES,
+                data=census_df,
+                label="salary",
+                feature_slice=args.slice_by,
+                slice_class=args.slice_class,
+                encoder=encoder,
+                label_binarizer=lb
+                )
+        print(f"max score in {args.k_fold_splits} training, on slice {args.slice_class}: {scores[best_index]}")
         precision, recall, fbeta = compute_model_metrics(y_test, predictions)
-        print(f"{args.k_fold_splits}-model accuracy: {accuracy}")
+        
         print(f"max score in {args.k_fold_splits} training: {scores[best_index]}")
-        joblib.dump(best_model, os.path.join(os.getcwd(), "models", f"model_{args.k_fold_splits}-fold.pkl"))
+        joblib.dump(best_model, os.path.join(os.getcwd(), "models", f"{args.model_output_file_name}.pkl"))
