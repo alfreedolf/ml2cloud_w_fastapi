@@ -35,7 +35,7 @@
             "console": "integratedTerminal"
         },
         {
-            "name": "Model Training K-Folds and scoring",
+            "name": "Model Training 10-Folds and scoring",
             "type": "debugpy",
             "request": "launch",
             "program": "train_model.py",

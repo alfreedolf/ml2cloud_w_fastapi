@@ -121,10 +121,18 @@ if __name__ == "__main__":
                 lb=lb,
             )
             predictions = model.predict(X_test)
-            score = accuracy_score(y_test, predictions)
-            scores.append(score)
+            # score = accuracy_score(y_test, predictions)
+            precision, recall, fbeta = compute_model_metrics(y_test, predictions)
+            scores.append([precision, recall, fbeta])
+
+        cum_scores = [sum(element) for element in scores]
+        max_cum_score = max(cum_scores)
         # get the best model
-        best_index = scores.index(max(scores))
+        best_index = cum_scores.index(max_cum_score)
         best_model = models[best_index]
-        print(f"max accuracy score in k-fold training: {max(scores)}")
+        predictions = best_model.predict(X_test)
+        accuracy = accuracy_score(y_test, predictions)
+        precision, recall, fbeta = compute_model_metrics(y_test, predictions)
+        print(f"{args.k_fold_splits}-model accuracy: {accuracy}")
+        print(f"max score in {args.k_fold_splits} training: {scores[best_index]}")
         joblib.dump(best_model, os.path.join(os.getcwd(), "models", f"model_{args.k_fold_splits}-fold.pkl"))
