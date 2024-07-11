@@ -122,6 +122,6 @@
                 "--model-output-file-name",
                 "model_10-fold_race-white"
             ]
-        }
+        },
     ]
 }
