@@ -1,7 +1,12 @@
+import os
+import logging
+import pickle
 from sklearn.metrics import fbeta_score, precision_score, recall_score
 from sklearn.ensemble import RandomForestClassifier
 
-from ml.data import process_data, slice_data
+from ml.data import process_data
+
+logging.basicConfig(level=logging.INFO)
 
 
 # Optional: implement hyperparameter tuning.
@@ -101,7 +106,22 @@ def compute_model_metrics_on_slice(
     return precision, recall, fbeta
 
 
-def inference(model, X):
+def _load_model_from_path(model_path: str):
+    """Loads a model from pickle file
+    Inputs
+    ------
+    model_path : str
+        Trained machine learning model path.
+    Returns
+    -----
+        unpickled model
+    """
+    with open(model_path, mode="rb", encoding="utf-8") as model_file:
+        model = pickle.load(model_file)
+        return model
+
+
+def inference(X, model="default"):
     """Run model inferences and return the predictions.
 
     Inputs
@@ -115,5 +135,17 @@ def inference(model, X):
     preds : np.array
         Predictions from the model.
     """
+    # in case a string is provided as path
+    if isinstance(model, str):
+        if model == "default":
+            model = _load_model_from_path(os.path.join("models", "model.pkl"))
+        else:
+            model = _load_model_from_path(model)
+    
+    # in case nor a string or a RandomForest Classifier is provided as input
+    elif not isinstance(model, RandomForestClassifier):
+        logging.error("wrong argument fro model parameter, no inference will be given")
+        return None
+
     predictions = model.predict(X)
     return predictions
