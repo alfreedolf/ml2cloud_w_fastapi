@@ -34,4 +34,5 @@ def test_compute_model_metrics(preprocessed_split_data, predictions):
 if __name__ == "__main__":
     # The `-v` flag is for verbose mode
     pytest_args = ["-v"]
+    pytest_args += sys.argv[1:]
     pytest.main(pytest_args)

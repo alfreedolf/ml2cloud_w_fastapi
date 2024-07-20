@@ -11,9 +11,23 @@
             "program": "unit/model_test.py",
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}",
-            "env": {"PYTHONPATH": "${workspaceFolder}${pathSeparator}${env:PYTHONPATH}"}
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}${pathSeparator}${env:PYTHONPATH}"
+            },
+            "args": ["-k", "model_test"]
+        },
+        {
+            "name": "Unit Test API",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "unit/api_test.py",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}${pathSeparator}${env:PYTHONPATH}"
+            }
+            ,
+            "args": ["-k", "api_test"]
         }
-        
     ]
-    
 }

@@ -7,15 +7,19 @@ from ml.data import process_data
 
 from ml.model import train_model
 
+import random
+
 print(os.getcwd())
 sys.path.append("./ml")
 
 TEST_DATA_PATH = "data"
+SAMPLE_SIZE = 50
 
 
 @pytest.fixture(name="training_data")
 def training_data():
     df_training_data = pd.read_csv(os.path.join(TEST_DATA_PATH, "census_clean.csv"))
+    df_training_data = df_training_data.rename(columns=lambda x: x.strip())
     yield df_training_data
 
 
@@ -78,6 +82,7 @@ def categorical_features():
     ]
     yield features
 
+
 @pytest.fixture(name="fitted_model")
 def fit_model(preprocessed_split_data):
     trained_model = train_model(
@@ -85,6 +90,7 @@ def fit_model(preprocessed_split_data):
         y_train=preprocessed_split_data["y_train"],
     )
     yield trained_model
+
 
 @pytest.fixture(name="predictions")
 def predictions(preprocessed_split_data):
@@ -95,3 +101,37 @@ def predictions(preprocessed_split_data):
     predictions = trained_model.predict(preprocessed_split_data["X_test"])
     return predictions
 
+
+def _generate_value(training_data, field_name: str):
+    """
+    Generates a random full name from training data.
+    """
+    sample_values = random.sample(training_data[field_name].values.tolist(), SAMPLE_SIZE)
+    value = random.choice(sample_values)
+    if isinstance(value, str):
+        value.replace("\n", "")
+        value.strip()
+    return value
+
+
+
+@pytest.fixture(name="census_record")
+def census_record(training_data):
+    age: str = _generate_value(training_data, field_name="age")
+    workclass: str = _generate_value(training_data, field_name="workclass")
+    fnlgt: int = int(_generate_value(training_data, field_name="fnlgt"))
+    education: str = _generate_value(training_data, field_name="education")
+    education_num: int = int(_generate_value(training_data, field_name="education-num"))
+    marital_status: str = _generate_value(training_data, field_name="marital-status")
+    occupation: str = _generate_value(training_data, field_name="occupation")
+    relationship: str = _generate_value(training_data, field_name="relationship")
+    race: str = _generate_value(training_data, field_name="race")
+    sex: str = _generate_value(training_data, field_name="sex")
+    capital_gain: int = int(_generate_value(training_data, field_name="capital-gain"))
+    capital_loss: int = int(_generate_value(training_data, field_name="capital-loss"))
+    hours_per_week: int = int(_generate_value(training_data, field_name="hours-per-week"))
+    native_country: str = _generate_value(training_data, field_name="native-country")
+
+    record = f"""age: {age}, workclass: {workclass}, fnlgt: {fnlgt}, education: {education}, education-num: {education_num}, marital-status: {marital_status}, occupation: {occupation}, relationship: {relationship}, race: {race}, sex: {sex}, capital-gain: {capital_gain}, capital-loss: {capital_loss}, hours-per-week: {hours_per_week}, hours-per-week: {native_country}"""
+
+    return record
