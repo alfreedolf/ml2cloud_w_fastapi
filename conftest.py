@@ -114,7 +114,49 @@ def _generate_value(training_data, field_name: str):
     return value
 
 
-@pytest.fixture(name="census_record")
+@pytest.fixture(name="census_record_high_salary")
+def census_record_high():
+    record = {
+        "age": 31,
+        "workclass": "private",
+        "fnlgt": 45781,
+        "education": "masters",
+        "education-num": 14,
+        "marital-status": "never-married",
+        "occupation": "prof-specialty",
+        "relationship": "not-in-family",
+        "race": "white",
+        "sex": "female",
+        "capital-gain": 14084,
+        "capital-loss": 0,
+        "hours-per-week": 50,
+        "native-country": "united-states",
+    }
+
+    return record
+
+@pytest.fixture(name="census_record_low_salary")
+def census_record_low():
+    record = {
+        "age": 39,
+        "workclass": "state-gov",
+        "fnlgt": 77516,
+        "education": "bachelors",
+        "education-num": 13,
+        "marital-status": "never-married",
+        "occupation": "adm-clerical",
+        "relationship": "not-in-family",
+        "race": "white",
+        "sex": "male",
+        "capital-gain": 2174,
+        "capital-loss": 0,
+        "hours-per-week": 40,
+        "native-country": "united-states",
+    }
+
+    return record
+
+@pytest.fixture(name="census_record_generated")
 def census_record(training_data):
     age: int = int(_generate_value(training_data, field_name="age"))
     workclass: str = str(_generate_value(training_data, field_name="workclass"))

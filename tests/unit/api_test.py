@@ -6,14 +6,24 @@ from main import app
 test_client = TestClient(app=app)
 
 def test_welcome_page():
-    return_value = test_client.get('/')
-    assert return_value.status_code == 200
-    assert return_value.text == '["welcome here, this is a REST API"]'
+    response = test_client.get('/')
+    assert response.status_code == 200
+    json_content = response.json()
+    assert json_content == ["welcome here, this is a REST API"]
 
-def test_predict(census_record):    
+def test_high_salary(census_record_high_salary):    
     # Send a POST request to the /items/ endpoint
-    response = test_client.post("/predict", json=census_record)
+    response = test_client.post("/predict", json=census_record_high_salary)
     assert response.status_code == 200, f"Resposnse: actual status code {response.status_code}, response body: {response.text}"
+    json_content = response.json()
+    assert json_content == [1]
+
+def test_low_salary(census_record_low_salary):    
+    # Send a POST request to the /items/ endpoint
+    response = test_client.post("/predict", json=census_record_low_salary)
+    assert response.status_code == 200, f"Resposnse: actual status code {response.status_code}, response body: {response.text}"
+    json_content = response.json()
+    assert json_content == [0]
 
 if __name__ == "__main__":
     # The `-v` flag is for verbose mode
