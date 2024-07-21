@@ -1,5 +1,4 @@
-/model.pkl
-/model_10-fold.pkl
-/model_10-fold_race-black.pkl
-/model_10-fold_sex-female.pkl
-/model_10-fold_sex-male.pkl
+/model.joblib
+/model_10-fold_race-black.joblib
+/model_10-fold_race-white.joblib
+/model_10-fold_sex-male.joblib

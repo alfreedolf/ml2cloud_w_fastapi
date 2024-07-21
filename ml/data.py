@@ -1,6 +1,11 @@
+import logging
+from os.path import join
 import numpy as np
 import pandas as pd
+from joblib import dump, load
 from sklearn.preprocessing import LabelBinarizer, OneHotEncoder
+from pathlib import Path
+
 
 def slice_data(data: pd.DataFrame, feature: str, feature_value: str) -> pd.DataFrame:
     """
@@ -8,7 +13,7 @@ def slice_data(data: pd.DataFrame, feature: str, feature_value: str) -> pd.DataF
 
     Inputs
     ------
-    data : pandas.DataFrame 
+    data : pandas.DataFrame
         Input data
     feature : str
         feature to be used to slice the data
@@ -19,10 +24,20 @@ def slice_data(data: pd.DataFrame, feature: str, feature_value: str) -> pd.DataF
     slice_of_data = data[data[feature] == feature_value]
     return slice_of_data
 
+
 def process_data(
-    X, categorical_features=[], label=None, slice_by=None, slice_class=None, training=True, encoder=None, lb=None
+    X,
+    categorical_features=[],
+    label=None,
+    slice_by=None,
+    slice_class=None,
+    training=True,
+    encoder=None,
+    lb=None,
+    serialized_encoder=join("data", "ohe.joblib"),
+    serialized_lb=join("data", "lb.joblib"),
 ):
-    """ Process the data used in the machine learning pipeline.
+    """Process the data used in the machine learning pipeline.
 
     Processes the data using one hot encoding for the categorical features and a
     label binarizer for the labels. This can be used in either training or
@@ -77,17 +92,35 @@ def process_data(
     X_continuous = X.drop(*[categorical_features], axis=1)
 
     if training is True:
+        # initializing encoder
         encoder = OneHotEncoder(sparse_output=False, handle_unknown="ignore")
+        
+
         lb = LabelBinarizer()
+        
         X_categorical = encoder.fit_transform(X_categorical)
+        # serializing encoder
+        dump(encoder, serialized_encoder)
         y = lb.fit_transform(y.values).ravel()
+        # serializing label binarizer
+        dump(lb, serialized_lb)        
     else:
-        X_categorical = encoder.transform(X_categorical)
+        if encoder is None:
+            try:
+                encoder_path = join("..", serialized_encoder)
+                encoder = load(encoder_path)
+            except FileNotFoundError:
+                logging.error("Encoder File %s not found", encoder)
+        try:
+            X_categorical = encoder.transform(X_categorical)
+        except AttributeError as transform_error:
+            logging.error("Attribute error in encoding categorical data: %s", transform_error)
+
         try:
             y = lb.transform(y.values).ravel()
         # Catch the case where y is None because we're doing inference.
         except AttributeError:
-            pass
+            logging.error("Attribute error, we are doing inference, so we have no label values")
 
     X = np.concatenate([X_continuous, X_categorical], axis=1)
     return X, y, encoder, lb

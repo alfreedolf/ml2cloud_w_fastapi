@@ -1,0 +1,5 @@
+outs:
+- md5: ef845a35b5e09d78892490fbf39a4c02
+  size: 4137
+  hash: md5
+  path: ohe.joblib

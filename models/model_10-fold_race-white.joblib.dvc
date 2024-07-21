@@ -1,0 +1,5 @@
+outs:
+- md5: 2b542043fba64e4c1fa26a17c62f50d7
+  size: 82079193
+  hash: md5
+  path: model_10-fold_race-white.joblib

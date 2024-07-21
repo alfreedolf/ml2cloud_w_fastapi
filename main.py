@@ -23,21 +23,21 @@ CATEGORICAL_FEATURES = [
 
 # Declare the data object with its components and their type.
 class CensusRecord(BaseModel):
-    age: str = Field(..., example="John Doe")
-    workclass: str = Field(..., example="state-gov")
-    fnlgt: int = Field(..., example=123456)
-    education: str = Field(..., example="masters")
-    education_num: int = Field(..., example=9)
-    marital_status: str = Field(..., example="never-married")
-    occupation: str = Field(..., example="sales")
-    relationship: str = Field(..., example="wife")
-    race: str = Field(..., example="black")
+    age: int = Field(..., example=43)
+    workclass: str = Field(..., example="private")
+    fnlgt: int = Field(..., example=174524)
+    education: str = Field(..., example="10th")
+    education_num: int = Field(..., example=10, alias="education-num")
+    marital_status: str = Field(..., example="never-married", alias="marital-status")
+    occupation: str = Field(..., example="prof-specialty")
+    relationship: str = Field(..., example="husband")
+    race: str = Field(..., example="white")
     sex: str = Field(..., example="male")
-    capital_gain: int = Field(..., example=0)
-    capital_loss: int = Field(..., example=0)
-    hours_per_week: int = Field(..., example=40)
-    native_country: str = Field(..., example="Italy")
-    salary: int = Field(None, example="<=50k")
+    capital_gain: int = Field(..., example=0, alias="capital-gain")
+    capital_loss: int = Field(..., example=0, alias="capital-loss")
+    hours_per_week: int = Field(..., example=40, alias="hours-per-week")
+    native_country: str = Field(..., example="united-states", alias="native-country")
+    salary: str = Field(None, example="<=50k")
 
 # Save items from POST method in the memory
 items = {}
@@ -55,11 +55,14 @@ async def welcome():
 # A POST method that does inference
 @app.post("/predict")
 async def do_inference(record: CensusRecord):
+    
+    record_dict = record.dict(by_alias=True)
+        
     X, y, encoder, lb = process_data(
-        X=pd.DataFrame(record.dict),
+        X=pd.DataFrame(record_dict, index=[0]),
         categorical_features=CATEGORICAL_FEATURES,
-        label="salary",
         training=False,
+        label="salary"
     )    
-    predictions = inference(X=X, model="model_10-fold_sex-male.pkl")
-    return predictions
+    predictions = inference(X=X, model="default")
+    return predictions.tolist()

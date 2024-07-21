@@ -1,5 +1,0 @@
-outs:
-- md5: ae2d6a4507146c9b1b2cd349a13a11e2
-  size: 81705913
-  hash: md5
-  path: model_10-fold.pkl

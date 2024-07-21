@@ -1,5 +1,0 @@
-outs:
-- md5: dbea1bc1191405db0695b1ccebaea230
-  size: 82005593
-  hash: md5
-  path: model_10-fold_race-black.pkl

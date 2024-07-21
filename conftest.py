@@ -114,24 +114,38 @@ def _generate_value(training_data, field_name: str):
     return value
 
 
-
 @pytest.fixture(name="census_record")
 def census_record(training_data):
-    age: str = _generate_value(training_data, field_name="age")
-    workclass: str = _generate_value(training_data, field_name="workclass")
+    age: int = int(_generate_value(training_data, field_name="age"))
+    workclass: str = str(_generate_value(training_data, field_name="workclass"))
     fnlgt: int = int(_generate_value(training_data, field_name="fnlgt"))
-    education: str = _generate_value(training_data, field_name="education")
+    education: str = str(_generate_value(training_data, field_name="education"))
     education_num: int = int(_generate_value(training_data, field_name="education-num"))
-    marital_status: str = _generate_value(training_data, field_name="marital-status")
-    occupation: str = _generate_value(training_data, field_name="occupation")
-    relationship: str = _generate_value(training_data, field_name="relationship")
-    race: str = _generate_value(training_data, field_name="race")
-    sex: str = _generate_value(training_data, field_name="sex")
+    marital_status: str = str(_generate_value(training_data, field_name="marital-status"))
+    occupation: str = str(_generate_value(training_data, field_name="occupation"))
+    relationship: str = str(_generate_value(training_data, field_name="relationship"))
+    race: str = str(_generate_value(training_data, field_name="race"))
+    sex: str = str(_generate_value(training_data, field_name="sex"))
     capital_gain: int = int(_generate_value(training_data, field_name="capital-gain"))
     capital_loss: int = int(_generate_value(training_data, field_name="capital-loss"))
     hours_per_week: int = int(_generate_value(training_data, field_name="hours-per-week"))
-    native_country: str = _generate_value(training_data, field_name="native-country")
+    native_country: str = str(_generate_value(training_data, field_name="native-country"))
 
-    record = f"""age: {age}, workclass: {workclass}, fnlgt: {fnlgt}, education: {education}, education-num: {education_num}, marital-status: {marital_status}, occupation: {occupation}, relationship: {relationship}, race: {race}, sex: {sex}, capital-gain: {capital_gain}, capital-loss: {capital_loss}, hours-per-week: {hours_per_week}, hours-per-week: {native_country}"""
+    record = {
+        "age": age,
+        "workclass": workclass,
+        "fnlgt": fnlgt,
+        "education": education,
+        "education-num": education_num,
+        "marital-status": marital_status,
+        "occupation": occupation,
+        "relationship": relationship,
+        "race": race,
+        "sex": sex,
+        "capital-gain": capital_gain,
+        "capital-loss": capital_loss,
+        "hours-per-week": hours_per_week,
+        "native-country": native_country,
+    }
 
     return record

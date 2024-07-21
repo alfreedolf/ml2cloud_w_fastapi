@@ -32,7 +32,7 @@ CATEGORICAL_FEATURES = [
 # Train and save a model.
 def train(model_output_file_name: str):
     model = train_model(X_train, y_train)
-    joblib.dump(model, os.path.join(os.getcwd(), "models", model_output_file_name+".pkl"))
+    joblib.dump(model, os.path.join(os.getcwd(), "models", model_output_file_name+".joblib"))
     return model
 
 
@@ -150,4 +150,4 @@ if __name__ == "__main__":
         precision, recall, fbeta = compute_model_metrics(y_test, predictions)
         
         print(f"max score in {args.k_fold_splits} training: {scores[best_index]}")
-        joblib.dump(best_model, os.path.join(os.getcwd(), "models", f"{args.model_output_file_name}.pkl"))
+        joblib.dump(best_model, os.path.join(os.getcwd(), "models", f"{args.model_output_file_name}.joblib"))

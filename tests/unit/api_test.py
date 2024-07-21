@@ -12,8 +12,8 @@ def test_welcome_page():
 
 def test_predict(census_record):    
     # Send a POST request to the /items/ endpoint
-    return_value = test_client.post("/predict", json=census_record)
-    assert return_value.status_code == 200
+    response = test_client.post("/predict", json=census_record)
+    assert response.status_code == 200, f"Resposnse: actual status code {response.status_code}, response body: {response.text}"
 
 if __name__ == "__main__":
     # The `-v` flag is for verbose mode

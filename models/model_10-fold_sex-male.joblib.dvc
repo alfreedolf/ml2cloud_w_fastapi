@@ -1,0 +1,5 @@
+outs:
+- md5: 64a654ec83a0b50dba9f8d6ada04dc43
+  size: 82380153
+  hash: md5
+  path: model_10-fold_sex-male.joblib

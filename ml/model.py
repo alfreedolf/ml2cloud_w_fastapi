@@ -1,6 +1,6 @@
 import os
 import logging
-import pickle
+import joblib
 from sklearn.metrics import fbeta_score, precision_score, recall_score
 from sklearn.ensemble import RandomForestClassifier
 
@@ -97,7 +97,7 @@ def compute_model_metrics_on_slice(
     )
 
     # do inference using the model
-    preds = inference(model, X)
+    preds = inference(X=X, model=model)
 
     compute_model_metrics(y, preds)
     fbeta = fbeta_score(y, preds, beta=1, zero_division=1)
@@ -107,7 +107,7 @@ def compute_model_metrics_on_slice(
 
 
 def _load_model_from_path(model_path: str):
-    """Loads a model from pickle file
+    """Loads a model from joblib file
     Inputs
     ------
     model_path : str
@@ -116,8 +116,8 @@ def _load_model_from_path(model_path: str):
     -----
         unpickled model
     """
-    with open(model_path, mode="rb", encoding="utf-8") as model_file:
-        model = pickle.load(model_file)
+    with open(model_path, mode="rb") as model_file:
+        model = joblib.load(model_file)
         return model
 
 
@@ -138,9 +138,9 @@ def inference(X, model="default"):
     # in case a string is provided as path
     if isinstance(model, str):
         if model == "default":
-            model = _load_model_from_path(os.path.join("models", "model.pkl"))
+            model = _load_model_from_path(os.path.join("..", "models", "model.joblib"))
         else:
-            model = _load_model_from_path(model)
+            model = _load_model_from_path(os.path.join("..", "models", model))
     
     # in case nor a string or a RandomForest Classifier is provided as input
     elif not isinstance(model, RandomForestClassifier):
