@@ -22,7 +22,7 @@ CATEGORICAL_FEATURES = [
 ]
 
 # Declare the data object with its components and their type.
-class CensusRecord(BaseModel):
+class CensusSalaryRequest(BaseModel):
     age: int = Field(..., example=43)
     workclass: str = Field(..., example="private")
     fnlgt: int = Field(..., example=174524)
@@ -54,15 +54,16 @@ async def welcome():
 
 # A POST method that does inference
 @app.post("/predict")
-async def do_inference(record: CensusRecord):
+async def do_inference(request: CensusSalaryRequest):
     
-    record_dict = record.dict(by_alias=True)
+    request_dict = request.dict(by_alias=True)
+    model = request_dict.pop('model', 'default')
         
     X, y, encoder, lb = process_data(
-        X=pd.DataFrame(record_dict, index=[0]),
+        X=pd.DataFrame(request_dict, index=[0]),
         categorical_features=CATEGORICAL_FEATURES,
         training=False,
         label="salary"
     )    
-    predictions = inference(X=X, model="default")
+    predictions = inference(X=X, model=model)
     return predictions.tolist()
