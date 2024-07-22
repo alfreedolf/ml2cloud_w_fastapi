@@ -59,6 +59,8 @@ async def do_inference(request: CensusSalaryRequest):
     
     request_dict = request.dict(by_alias=True)
     model = request_dict.pop('model', 'default')
+    # serialized_encoder = request_dict.pop('serialized_encoder', 'default')
+    # serialized_lb = request_dict.pop('serialized_lb', 'default')
         
     X, y, encoder, lb = process_data(
         X=pd.DataFrame(request_dict, index=[0]),
