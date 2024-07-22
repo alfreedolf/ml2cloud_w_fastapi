@@ -139,6 +139,7 @@ def census_record_high():
 
     return record
 
+
 @pytest.fixture(name="census_record_low_salary")
 def census_record_low():
     record = {
@@ -159,6 +160,7 @@ def census_record_low():
     }
 
     return record
+
 
 @pytest.fixture(name="census_record_generated")
 def census_record(training_data):
