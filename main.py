@@ -38,6 +38,7 @@ class CensusSalaryRequest(BaseModel):
     hours_per_week: int = Field(..., example=40, alias="hours-per-week")
     native_country: str = Field(..., example="united-states", alias="native-country")
     salary: str = Field(None, example="<=50k")
+    model: str = Field(None, example="default")
 
 # Save items from POST method in the memory
 items = {}
