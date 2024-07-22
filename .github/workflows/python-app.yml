@@ -43,7 +43,6 @@ jobs:
     - name: Unit Test model code
       run: |
         pytest -v -k 'model_test'
-        - name: Test model
     - name : Unit Test APIs
       run: |
         pytest -v -k 'api_test'
