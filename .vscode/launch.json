@@ -12,13 +12,6 @@
             "console": "integratedTerminal"
         },
         {
-            "name": "Test Model",
-            "type": "debugpy",
-            "request": "launch",
-            "program": "model_test.py",
-            "console": "integratedTerminal"
-        },
-        {
             "name": "Model Training and scoring",
             "type": "debugpy",
             "request": "launch",
