@@ -34,7 +34,7 @@ def process_data(
     training=True,
     encoder=None,
     lb=None,
-    serialized_encoder=join("data", "ohe.joblib"),
+    serialized_encoder='default',
     serialized_lb=join("data", "lb.joblib"),
 ):
     """Process the data used in the machine learning pipeline.
@@ -107,10 +107,26 @@ def process_data(
     else:
         if encoder is None:
             try:
-                encoder_path = join("..", serialized_encoder)
+                if serialized_encoder == 'default':
+                    encoder_path = join("..", "data", "ohe.joblib")
+                elif serialized_encoder == 'test':
+                    encoder_path = join("data", "ohe.joblib")
+                else:
+                    encoder_path = join("..", "data", serialized_encoder)
                 encoder = load(encoder_path)
             except FileNotFoundError:
                 logging.error("Encoder File %s not found", encoder)
+        # if lb is None:
+        #     try:
+        #         if serialized_lb == 'default':
+        #             lb_path = join("..", "data", "lb.joblib")
+        #         elif serialized_lb == 'test':
+        #             lb_path = join("data", "lb.joblib")
+        #         else:
+        #             lb_path = join("..", "data", serialized_lb)
+        #         lb = load(lb_path)
+        #     except FileNotFoundError:
+        #         logging.error("Label Binarizer File %s not found", lb)
         try:
             X_categorical = encoder.transform(X_categorical)
         except AttributeError as transform_error:

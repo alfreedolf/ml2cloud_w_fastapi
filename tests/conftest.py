@@ -135,7 +135,9 @@ def census_record_high():
         "capital-loss": 0,
         "hours-per-week": 50,
         "native-country": "united-states",
-        "model": "test"
+        "model": "test",
+        "serialized_encoder": "test",
+        "serialized_lb": "test"
     }
 
     return record
@@ -158,7 +160,9 @@ def census_record_low():
         "capital-loss": 0,
         "hours-per-week": 40,
         "native-country": "united-states",
-        "model": "test"
+        "model": "test",
+        "serialized_encoder": "test",
+        "serialized_lb": "test"
     }
 
     return record

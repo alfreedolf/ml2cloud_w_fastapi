@@ -39,6 +39,8 @@ class CensusSalaryRequest(BaseModel):
     native_country: str = Field(..., example="united-states", alias="native-country")
     salary: str = Field(None, example="<=50k")
     model: str = Field(None, example="default")
+    serialized_encoder:str = Field(None, example="default")
+    serialized_lb:str = Field(None, example="default")
 
 # Save items from POST method in the memory
 items = {}
@@ -59,14 +61,16 @@ async def do_inference(request: CensusSalaryRequest):
     
     request_dict = request.dict(by_alias=True)
     model = request_dict.pop('model', 'default')
-    # serialized_encoder = request_dict.pop('serialized_encoder', 'default')
-    # serialized_lb = request_dict.pop('serialized_lb', 'default')
+    serialized_encoder = request_dict.pop('serialized_encoder', 'default')
+    serialized_lb = request_dict.pop('serialized_lb', 'default')
         
     X, y, encoder, lb = process_data(
         X=pd.DataFrame(request_dict, index=[0]),
         categorical_features=CATEGORICAL_FEATURES,
         training=False,
-        label="salary"
+        label="salary",
+        serialized_encoder=serialized_encoder,
+        serialized_lb=serialized_lb
     )    
     predictions = inference(X=X, model=model)
     return predictions.tolist()
