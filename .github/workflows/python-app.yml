@@ -6,12 +6,15 @@ name: Python application
 on:
   push:
     branches: [ "main" ]
+    paths-ignore:
+    - 'starter/**'
   pull_request:
     branches: [ "main" ]
+    paths-ignore:
+    - 'starter/**'
 
-paths-ignore:
-  - 'starter/**'
-  
+
+
 permissions:
   contents: read
 
