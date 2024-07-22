@@ -42,8 +42,8 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics --exclude starter
     - name: Unit Test model code
       run: |
-        pytest -v "-k", "model_test"
+        pytest -v -k 'model_test'
         - name: Test model
     - name : Unit Test APIs
       run: |
-        pytest -v "-k", "api_test"
+        pytest -v -k 'api_test'
