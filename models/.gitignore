@@ -1,4 +1,3 @@
-/model.joblib
 /model_10-fold_race-black.joblib
 /model_10-fold_race-white.joblib
 /model_10-fold_sex-male.joblib
