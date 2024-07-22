@@ -1,3 +1,4 @@
+import logging
 import sys
 import os
 import pytest
@@ -9,7 +10,8 @@ from ml.model import train_model
 
 import random
 
-print(os.getcwd())
+logging.basicConfig(level=logging.INFO)
+logging.info(os.getcwd())
 sys.path.append("./ml")
 
 TEST_DATA_PATH = "data"
@@ -18,7 +20,9 @@ SAMPLE_SIZE = 50
 
 @pytest.fixture(name="training_data")
 def training_data():
-    df_training_data = pd.read_csv(os.path.join(TEST_DATA_PATH, "census_clean.csv"))
+    census_data_full_path = os.path.join(TEST_DATA_PATH, "census_clean.csv")
+    logging.info("full path of training data is %s", census_data_full_path)
+    df_training_data = pd.read_csv(census_data_full_path)
     df_training_data = df_training_data.rename(columns=lambda x: x.strip())
     yield df_training_data
 
