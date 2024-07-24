@@ -5,6 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Send Default Post Request",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "post_request.py",
+            "console": "integratedTerminal"
+        },
+        {
             "name": "Sanity Check",
             "type": "debugpy",
             "request": "launch",

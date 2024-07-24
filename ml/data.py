@@ -34,7 +34,7 @@ def process_data(
     training=True,
     encoder=None,
     lb=None,
-    serialized_encoder='default',
+    serialized_encoder="default",
     serialized_lb=join("data", "lb.joblib"),
 ):
     """Process the data used in the machine learning pipeline.
@@ -94,28 +94,30 @@ def process_data(
     if training is True:
         # initializing encoder
         encoder = OneHotEncoder(sparse_output=False, handle_unknown="ignore")
-        
 
         lb = LabelBinarizer()
-        
+
         X_categorical = encoder.fit_transform(X_categorical)
         # serializing encoder
         dump(encoder, serialized_encoder)
         y = lb.fit_transform(y.values).ravel()
         # serializing label binarizer
-        dump(lb, serialized_lb)        
+        dump(lb, serialized_lb)
     else:
         if encoder is None:
             try:
-                if serialized_encoder == 'default':
-                    encoder_path = join("..", "data", "ohe.joblib")
-                elif serialized_encoder == 'test':
+                if serialized_encoder == "default" or serialized_encoder == "test":
                     encoder_path = join("data", "ohe.joblib")
                 else:
-                    encoder_path = join("..", "data", serialized_encoder)
+                    encoder_path = join("data", serialized_encoder)
                 encoder = load(encoder_path)
-            except FileNotFoundError:
-                logging.error("Encoder File %s not found", encoder)
+            except (FileNotFoundError, TypeError) as error:
+                logging.error(
+                    "File %s not found or serialized encoder %s not present, error %s",
+                    encoder,
+                    serialized_encoder,
+                    error
+                )
         # if lb is None:
         #     try:
         #         if serialized_lb == 'default':

@@ -136,8 +136,8 @@ def census_record_high():
         "hours-per-week": 50,
         "native-country": "united-states",
         "model": "test",
-        "serialized_encoder": "test",
-        "serialized_lb": "test"
+        "serialized-encoder": "test",
+        "serialized-lb": "test"
     }
 
     return record
@@ -161,8 +161,8 @@ def census_record_low():
         "hours-per-week": 40,
         "native-country": "united-states",
         "model": "test",
-        "serialized_encoder": "test",
-        "serialized_lb": "test"
+        "serialized-encoder": "test",
+        "serialized-lb": "test"
     }
 
     return record

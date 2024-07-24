@@ -7,6 +7,7 @@ import pandas as pd
 from pydantic import BaseModel, Field
 from ml.data import process_data
 from ml.model import inference
+import logging
 
 
 # set categorical data
@@ -39,8 +40,8 @@ class CensusSalaryRequest(BaseModel):
     native_country: str = Field(..., example="united-states", alias="native-country")
     salary: str = Field(None, example="<=50k")
     model: str = Field(None, example="default")
-    serialized_encoder:str = Field(None, example="default")
-    serialized_lb:str = Field(None, example="default")
+    serialized_encoder:str = Field(None, example="default", alias="serialized-encoder")
+    serialized_lb:str = Field(None, example="default", alias="serialized-lb")
 
 # Save items from POST method in the memory
 items = {}
@@ -61,8 +62,8 @@ async def do_inference(request: CensusSalaryRequest):
     
     request_dict = request.dict(by_alias=True)
     model = request_dict.pop('model', 'default')
-    serialized_encoder = request_dict.pop('serialized_encoder', 'default')
-    serialized_lb = request_dict.pop('serialized_lb', 'default')
+    serialized_encoder = request_dict.pop('serialized-encoder', 'default')
+    serialized_lb = request_dict.pop('serialized-lb', 'default')
         
     X, y, encoder, lb = process_data(
         X=pd.DataFrame(request_dict, index=[0]),

@@ -137,9 +137,7 @@ def inference(X, model="default"):
     """
     # in case a string is provided as path
     if isinstance(model, str):
-        if model == "default":
-            model = _load_model_from_path(os.path.join("..", "models", "model.joblib"))
-        elif model == "test":
+        if model == "default" or model == "test":
             model = _load_model_from_path(os.path.join("models", "model.joblib"))
         else:
             model = _load_model_from_path(os.path.join("..", "models", model))
