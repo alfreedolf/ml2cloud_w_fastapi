@@ -1,12 +1,18 @@
 # ml2cloud_w_fastapi
-Deploy machine learning model to cloud platform application using Fast API
+This is a Udacity Ml DevOps Nano Degree project.
+The project is focuse on:
+- train a RandomForestClassifier to classify salary ranges based on census data taken from [here](https://archive.ics.uci.edu/dataset/20/census+income)
+- check model performances on the full dataset and on slices of the data
+- unit test the modeling functions (inference, etc.) 
+- create a RESTful API implemented in [Fast API](https://fastapi.tiangolo.com/) that provides inference response on incoming data through POST requests. POST request data is validated using [PyDantic](https://docs.pydantic.dev/latest/).
+- unit test the APIs
 
 
 ## Contents
 - [.github](.github) contains CI/CD workflow YAML specification for github actions
 - [data](data) folder containing data and related data encoders (One Hot Encoder and Label Binarizer in Joblib format)
-- [tests](tests) contains tests
-- [.vscode](vscode) contains vscode conf files
-- [ml](ml) contains data and model functions, needed preprocessing and inference
+- [tests](tests) contains tests and related data utilized for testing
+- [.vscode](.vscode) contains vscode conf files (launch, etc.)
+- [ml](ml) contains data and model functions, needed for preprocessing and inference
 - [models](models) contains serialized models (note: only the default model.joblib is currently present, the other ones are on a DVC managed Google Drive remote)
 - [screenshots](screenshots) contains screenshots of that shows that CD and API works

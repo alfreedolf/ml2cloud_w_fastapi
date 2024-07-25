@@ -5,7 +5,7 @@ For additional information see the Model Card paper: https://arxiv.org/pdf/1810.
 ## Model Details
 - Author: Alfonso Ridolfo
 - Date: 07.2024
-- Type of model: RandomForestClassifier, to classify income ranges on data.
+- Type of model: RandomForestClassifier, to classify income ranges on census data.
 
 
 ## Data
