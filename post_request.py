@@ -1,4 +1,3 @@
-import ast
 import json
 import logging
 import requests
@@ -24,6 +23,8 @@ DEFAULT_PAYLOAD = {
     "serialized-lb": "default"
 }
 
+logging.basicConfig(level=logging.INFO)
+
 DEFAULT_URL = "http://localhost:80/predict"
 
 # "model": "test",
@@ -44,14 +45,19 @@ def send_post(endpoint_url: str, payload: str) -> int:
         except json.JSONDecodeError as e:
             logging.error("Error: Invalid JSON format - %s", e)
             return -1
+    try:
+        # Sending the POST request
+        response = requests.post(endpoint_url, json=payload, headers=headers)
+        # Printing the response
+        logging.info("Status Code:", response.status_code)
+        logging.info("Response JSON:", response.json())
+        return response.status_code
+    except requests.exceptions.RequestException as req_err:
+        logging.error("Error during the request: ", req_err)
+        return None
 
-    # Sending the POST request
-    response = requests.post(endpoint_url, json=payload, headers=headers)
 
-    # Printing the response
-    print("Status Code:", response.status_code)
-    print("Response JSON:", response.json())
-    return response.status_code
+    
 
 
 if __name__ == "__main__":
