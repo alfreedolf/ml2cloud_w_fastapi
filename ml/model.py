@@ -54,7 +54,7 @@ def compute_model_metrics(y, preds):
 
 
 def compute_model_metrics_on_slice(
-    model, data, categorical_features, label, feature_slice, slice_class, encoder, label_binarizer
+    model, data, categorical_features, label, feature_slice, slice_class, encoder, label_binarizer, metrics_file_path="slice_output.txt"
 ):
     """
     Validates the trained machine learning model using precision, recall, and F1 on slices.
@@ -77,6 +77,8 @@ def compute_model_metrics_on_slice(
         encoder to be used, reuse it from training phase
     label_binarizer:
         label binarizer to be used, reuse it from training phase
+    metrics_file_path:
+        path where to write performances values
     Returns
     -------
     precision : float
@@ -103,6 +105,14 @@ def compute_model_metrics_on_slice(
     fbeta = fbeta_score(y, preds, beta=1, zero_division=1)
     precision = precision_score(y, preds, zero_division=1)
     recall = recall_score(y, preds, zero_division=1)
+    
+    try:
+        with open(metrics_file_path, 'w') as metrics_file:
+            metrics_file.write(f"precision: {precision}\n")
+            metrics_file.write(f"recall: {recall}\n")  
+            metrics_file.write(f"fbeta: {fbeta}\n")
+    except FileNotFoundError as fnfe:
+        logging.error("File %s not found", metrics_file_path)
     return precision, recall, fbeta
 
 
