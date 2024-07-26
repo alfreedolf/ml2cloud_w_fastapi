@@ -18,3 +18,5 @@ The project is focuse on:
 - [screenshots](screenshots) contains screenshots of that shows that CD and API works
 - [post_request.py](post_request.py) file that sends a post request to check that everything works. It works as an integration test, and can be used with the URL of the deployed API (in Heroku, Render etc.), accepts it as a command line parameter (also accepts a string with an arbitrary payload for the POST request, it has to comply to the *CensusRecord* PyDantic model, please check [here](main.py))
 
+- [slice_output](slice_output.txt) contains performances metrics of models on selected slice
+

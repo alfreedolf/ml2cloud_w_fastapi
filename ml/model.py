@@ -31,7 +31,7 @@ def train_model(X_train, y_train):
     return rfc
 
 
-def compute_model_metrics(y, preds):
+def compute_model_metrics(y, preds, metrics_file_path="output.txt"):
     """
     Validates the trained machine learning model using precision, recall, and F1.
 
@@ -50,6 +50,13 @@ def compute_model_metrics(y, preds):
     fbeta = fbeta_score(y, preds, beta=1, zero_division=1)
     precision = precision_score(y, preds, zero_division=1)
     recall = recall_score(y, preds, zero_division=1)
+    try:
+        with open(metrics_file_path, 'w', encoding="utf-8") as metrics_file:
+            metrics_file.write(f"precision: {precision}\n")
+            metrics_file.write(f"recall: {recall}\n")  
+            metrics_file.write(f"fbeta: {fbeta}\n")
+    except FileNotFoundError as fnfe:
+        logging.error("File %s not found", metrics_file_path)
     return precision, recall, fbeta
 
 
